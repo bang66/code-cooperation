@@ -1,6 +1,7 @@
 package com.zp.code.handle;
 
 import com.zp.code.DTO.Response;
+import com.zp.code.common.BizError;
 import com.zp.code.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,12 @@ public class ExceptionHandle {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Response handle(Exception e) {
-        if (e instanceof BizException) {   //判断异常是否是我们定义的异常
+        if (e instanceof BizException) {
             BizException bizException = (BizException) e;
             return ResultUtil.error(bizException.getCode(), bizException.getMsg());
         }else {
             logger.error("[Code-Cooperation]系统异常:{}", e);
-            return ResultUtil.error(-1, "未知错误");
+            return ResultUtil.error(BizError.SYSTEM_ERROR.getCode(), BizError.SYSTEM_ERROR.getMsg());
         }
     }
 }

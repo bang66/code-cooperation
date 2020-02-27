@@ -25,10 +25,7 @@ public class ApiInterceptor implements HandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return false;
         }
-
         String token = request.getHeader("t");
-
-
         if (StringUtils.isEmpty(token)) {
             throw new BizException(BizError.ILLEGAL_REQUEST);
         }
