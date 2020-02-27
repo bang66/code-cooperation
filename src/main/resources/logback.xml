@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 属性定义 -->
+    <property name="appName" value="Code-Cooperation" />
+    <property name="maxHistory" value="25" />
+
+    <!-- ConsoleAppender 控制台输出日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 对日志进行格式化 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{50}\(%F %L\) -%msg%n </pattern>
+        </encoder>
+    </appender>
+
+    <!-- INFO级别日志 -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只记录「INFO」级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>logs/code-cooperation.api.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/code-cooperation.api.log.%d{yyyy-MM-dd-HH}.%i.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>${maxHistory}</maxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{50}\(%F %L\) -%msg%n </pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- ERROR级别日志 -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只记录「ERROR」级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>logs/code-cooperation.api.error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/code-cooperation.api.error.log.%d{yyyy-MM-dd-HH}.%i.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>${maxHistory}</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{50}\(%F %L\) -%msg%n </pattern>
+        </encoder>
+    </appender>
+
+    <!--&lt;!&ndash; eg: com.ljq.test 类的日志输出 info 及以上级别的日志 &ndash;&gt;-->
+    <!--&lt;!&ndash;<logger name="com.ljq.test" level="info" />&ndash;&gt;-->
+    <!--&lt;!&ndash; eg: com.ljq.test1 类的日志不输出 &ndash;&gt;-->
+    <!--&lt;!&ndash;<logger name="com.ljq.test1" additivity="false" />&ndash;&gt;-->
+    <!--<logger name="org.apache.ibatis.io" level="info" />-->
+    <!--<logger name="org.mybatis.spring" level="info" />-->
+    <!--<logger name="org.springframework" level="info" />-->
+    <!--<logger name="io.lettuce" level="info"/>-->
+    <!--<logger name="io.netty" level="info" />-->
+    <!--<logger name="com.netflix.eureka" level="warn" />-->
+
+    <!-- 根日志,所有日志appender都必须包含在root/logger中,否则不会起作用 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="INFO" />
+        <appender-ref ref="ERROR" />
+    </root>
+</configuration>
