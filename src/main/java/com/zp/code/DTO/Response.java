@@ -4,7 +4,7 @@ package com.zp.code.DTO;
  * @author zhangpeng
  * @since 1.0.0
  */
-public class Result<T> {
+public class Response<T> {
 
     /** 错误码. */
     private Integer code;
@@ -39,15 +39,15 @@ public class Result<T> {
         this.data = data;
     }
 
-    public Result(Integer code, String msg) {
+    public Response(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public Result() {
+    public Response() {
     }
 
-    public Result(Integer code, String msg, T data) {
+    public Response(Integer code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;

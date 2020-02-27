@@ -1,7 +1,6 @@
 package com.zp.code.handle;
 
-import com.zp.code.DTO.Result;
-import com.zp.code.common.BizError;
+import com.zp.code.DTO.Response;
 
 /**
  * @author zhangpeng
@@ -13,9 +12,9 @@ public class BizException extends RuntimeException {
 
     private String msg;
 
-    public BizException(Result result) {
-        this.msg = result.getMsg();
-        this.code = result.getCode();
+    public BizException(Response response) {
+        this.msg = response.getMsg();
+        this.code = response.getCode();
 
     }
 
