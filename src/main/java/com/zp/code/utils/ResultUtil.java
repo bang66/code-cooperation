@@ -3,6 +3,7 @@ package com.zp.code.utils;
 import com.zp.code.DTO.Response;
 
 /**
+ * 响应体封装类
  * @author zhangpeng
  * @since 1.0.0
  */

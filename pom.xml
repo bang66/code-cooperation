@@ -84,6 +84,14 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons_lang3_version}</version>
         </dependency>
+
+        <!-- 发邮件 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.5.0-b01</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>

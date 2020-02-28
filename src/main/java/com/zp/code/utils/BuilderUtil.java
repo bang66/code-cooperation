@@ -8,8 +8,20 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class BuilderUtil {
 
+    /**
+     * 生成用户token
+     * @return
+     */
     public static String generateToken() {
-        String token = RandomStringUtils.randomAlphanumeric(16);
-        return token;
+        return RandomStringUtils.randomAlphanumeric(16);
     }
+
+    /**
+     * 生成验证码
+     * @return
+     */
+    public static String generateCode() {
+        return RandomStringUtils.random(6);
+    }
+
 }
