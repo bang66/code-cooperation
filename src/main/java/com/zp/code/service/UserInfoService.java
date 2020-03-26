@@ -13,4 +13,8 @@ public interface UserInfoService {
 
     UserInfo regist(String emlAddr, String passwd, String code);
 
+    UserInfo checkToken(String token);
+
+    void joinProject(UserInfo userInfo);
+
 }

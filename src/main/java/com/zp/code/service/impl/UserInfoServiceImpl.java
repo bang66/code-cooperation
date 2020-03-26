@@ -4,7 +4,6 @@ import com.zp.code.common.BizError;
 import com.zp.code.handle.BizException;
 import com.zp.code.model.UserInfo;
 import com.zp.code.repository.UserInfoJPA;
-import com.zp.code.service.CommonService;
 import com.zp.code.service.UserInfoService;
 import com.zp.code.utils.BuilderUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -62,5 +61,20 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfoJPA.save(userInfo);
         logger.info("[Regist] userInfo save db : {}", userInfo);
         return userInfo;
+    }
+
+    @Override
+    public UserInfo checkToken(String token) {
+        if (StringUtils.isBlank(token)) {
+            throw new BizException(BizError.NOT_SEND_CODE);
+        }
+        Optional<UserInfo> optionalUserInfo = userInfoJPA.findByToken(token);
+        UserInfo userInfo = optionalUserInfo.orElseThrow(() -> new BizException(BizError.ILLEGAL_REQUEST));
+        return userInfo;
+    }
+
+    @Override
+    public void joinProject(UserInfo userInfo) {
+
     }
 }

@@ -47,4 +47,11 @@ public class UserInfoController extends BaseController {
         return success();
     }
 
+    @RequestMapping(value = "/v1/join/project", method = RequestMethod.GET)
+    @WebLog
+    public Object getJoinProject() {
+        UserInfo userInfo = getUserInfoByToken();
+        userInfoService.joinProject(userInfo);
+        return success();
+    }
 }
