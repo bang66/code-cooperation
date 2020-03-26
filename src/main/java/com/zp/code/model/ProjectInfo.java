@@ -1,6 +1,7 @@
 package com.zp.code.model;
 
 import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -15,18 +16,16 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "user_info")
-public class UserInfo extends BasicModel implements Serializable {
+@Table(name = "project_info")
+public class ProjectInfo extends BasicModel implements Serializable {
 
-    private static final long serialVersionUID = 6595107830322457445L;
+    private static final long serialVersionUID = -8199228119156677214L;
 
-    private String emlAddr;
+    private String projectId;
 
-    private String passwd;
+    private String projectName;
 
-    private String token;
-
-    private String name;
+    private String ProjectDesc;
 
     private long createTime;
 

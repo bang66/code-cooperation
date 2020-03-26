@@ -24,4 +24,13 @@ public class BuilderUtil {
         return RandomStringUtils.random(6);
     }
 
+    /**
+     * 生成projecetId
+     * @return
+     */
+    public static String generateProjectId() {
+        return RandomStringUtils.randomAlphanumeric(8);
+    }
+
+
 }
