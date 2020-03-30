@@ -28,6 +28,9 @@ public class UserInfo extends BasicModel implements Serializable {
 
     private String name;
 
+    /** ["pid1", "pid2"] */
+    private String favorites;
+
     private long createTime;
 
     private long updateTime;

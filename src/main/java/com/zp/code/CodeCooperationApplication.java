@@ -14,9 +14,9 @@ public class CodeCooperationApplication {
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(CodeCooperationApplication.class, args);
-		logger.info("[Code-Cooperation] Server Start!");
-		String eml = "13739926022@sina.cn";
-		MailUtil.sendMail(eml, "330621");
+//		logger.info("[Code-Cooperation] Server Start!");
+//		String eml = "13739926022@sina.cn";
+//		MailUtil.sendMail(eml, "330621");
 	}
 
 }

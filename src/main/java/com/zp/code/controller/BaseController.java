@@ -2,6 +2,7 @@ package com.zp.code.controller;
 
 import com.zp.code.model.UserInfo;
 import com.zp.code.service.CommonService;
+import com.zp.code.service.ProjectInfoService;
 import com.zp.code.service.UserInfoService;
 import com.zp.code.utils.CommonParamUtils;
 import com.zp.code.utils.ResultUtil;
@@ -20,6 +21,9 @@ public class BaseController {
 
     @Autowired
     protected CommonService commonService;
+
+    @Autowired
+    protected ProjectInfoService projectInfoService;
 
     protected UserInfo getUserInfoByToken() {
         String token = CommonParamUtils.get().getToken();

@@ -10,6 +10,7 @@ public class BizError {
     public static Response PARAM_ERROR = new Response(1000, "prams error");
     public static Response SYSTEM_ERROR = new Response(1001, "system error");
     public static Response ILLEGAL_REQUEST = new Response(1002, "illegal request");
+    public static Response DATA_MISS = new Response(1003, "data missing");
 
 
     //业务错误

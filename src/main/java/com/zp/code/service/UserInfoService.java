@@ -1,6 +1,9 @@
 package com.zp.code.service;
 
+import com.zp.code.DTO.ProjectListDTO;
 import com.zp.code.model.UserInfo;
+
+import java.util.List;
 
 /**
  * @author zhangpeng
@@ -14,7 +17,5 @@ public interface UserInfoService {
     UserInfo regist(String emlAddr, String passwd, String code);
 
     UserInfo checkToken(String token);
-
-    void joinProject(UserInfo userInfo);
 
 }

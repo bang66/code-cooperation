@@ -23,7 +23,7 @@ public class CommentInfo extends BasicModel implements Serializable {
 
     private String projectId;
 
-    private String userId;
+    private Long userId;
 
     private String message;
 

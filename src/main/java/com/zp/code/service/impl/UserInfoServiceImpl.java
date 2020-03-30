@@ -3,13 +3,12 @@ package com.zp.code.service.impl;
 import com.zp.code.common.BizError;
 import com.zp.code.handle.BizException;
 import com.zp.code.model.UserInfo;
-import com.zp.code.repository.UserInfoJPA;
+import com.zp.code.service.BaseService;
 import com.zp.code.service.UserInfoService;
 import com.zp.code.utils.BuilderUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,13 +18,9 @@ import java.util.Optional;
  * @since 1.0.0
  */
 @Service("userInfoService")
-public class UserInfoServiceImpl implements UserInfoService {
+public class UserInfoServiceImpl extends BaseService implements UserInfoService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
-
-
-    @Autowired
-    protected UserInfoJPA userInfoJPA;
 
     @Override
     public UserInfo login(String emlAddr, String passwd) {
@@ -55,6 +50,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo userInfo = UserInfo.builder()
                 .emlAddr(emlAddr)
                 .passwd(passwd)
+                .name(BuilderUtil.generateUserName())
                 .token(BuilderUtil.generateToken())
                 .createTime(System.currentTimeMillis())
                 .build();
@@ -66,15 +62,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo checkToken(String token) {
         if (StringUtils.isBlank(token)) {
-            throw new BizException(BizError.NOT_SEND_CODE);
+            throw new BizException(BizError.PARAM_ERROR);
         }
         Optional<UserInfo> optionalUserInfo = userInfoJPA.findByToken(token);
         UserInfo userInfo = optionalUserInfo.orElseThrow(() -> new BizException(BizError.ILLEGAL_REQUEST));
         return userInfo;
-    }
-
-    @Override
-    public void joinProject(UserInfo userInfo) {
-
     }
 }

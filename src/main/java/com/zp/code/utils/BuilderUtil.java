@@ -1,5 +1,6 @@
 package com.zp.code.utils;
 
+import com.zp.code.common.GlobalConstant;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
@@ -30,6 +31,14 @@ public class BuilderUtil {
      */
     public static String generateProjectId() {
         return RandomStringUtils.randomAlphanumeric(8);
+    }
+
+    /**
+     * 生成用户名字
+     * @return
+     */
+    public static String generateUserName() {
+        return GlobalConstant.PREFIX_USER_NAME + RandomStringUtils.randomAlphanumeric(4);
     }
 
 
