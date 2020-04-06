@@ -78,4 +78,11 @@ public class ProjectInfoController extends BaseController {
         projectInfoService.submitProject(projectId, code, userInfo);
         return success(projectId);
     }
+
+    @RequestMapping(value = "/v1/project/run", method = RequestMethod.GET)
+    @WebLog
+    public Object runProject(@RequestParam String projectId) {
+        String res = projectInfoService.runProject(projectId);
+        return success(res);
+    }
 }

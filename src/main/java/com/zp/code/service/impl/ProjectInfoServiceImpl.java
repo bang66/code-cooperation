@@ -10,10 +10,8 @@ import com.zp.code.handle.BizException;
 import com.zp.code.model.CommentInfo;
 import com.zp.code.model.ProjectInfo;
 import com.zp.code.model.UserInfo;
-import com.zp.code.repository.CommentInfoJPA;
 import com.zp.code.service.BaseService;
 import com.zp.code.service.ProjectInfoService;
-import com.zp.code.service.UserInfoService;
 import com.zp.code.utils.BuilderUtil;
 import com.zp.code.utils.CommandLineUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -174,7 +172,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
             throw new BizException(BizError.ILLEGAL_REQUEST);
         }
         String projectId = BuilderUtil.generateProjectId();
-        boolean result = CommandLineUtils.createFile(projectId, "");
+        boolean result = CommandLineUtils.createFile(projectId, projectName, "");
         if (!result) {
             throw new BizException(BizError.SYSTEM_ERROR);
         }
@@ -202,7 +200,9 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {
             throw new BizException(BizError.ILLEGAL_REQUEST);
         }
-        boolean result = CommandLineUtils.createFile(projectId, code);
+        Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(projectId);
+        ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+        boolean result = CommandLineUtils.createFile(projectId, projectInfo.getProjectName(), code);
         if (!result) {
             throw new BizException(BizError.SYSTEM_ERROR);
         }
@@ -211,5 +211,18 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
                 .projectId(projectId)
                 .createTime(System.currentTimeMillis())
                 .build());
+    }
+
+    @Override
+    public String runProject(String projectId) {
+        if (StringUtils.isAnyBlank(projectId)) {
+            throw new BizException(BizError.PARAM_ERROR);
+        }
+        Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(projectId);
+        ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+        String projectName = projectInfo.getProjectName();
+        String res = CommandLineUtils.runProject(projectId, projectName);
+        logger.info("[RunProject] res:{}", res);
+        return res;
     }
 }

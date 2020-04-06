@@ -51,7 +51,7 @@ public interface ProjectInfoService {
     HomePageDTO getHomePage(UserInfo userInfo);
 
     /**
-     * 创建项目
+     * 创建项目(projectName为java文件名字)
      * @param projectName
      * @param projectDesc
      * @param userInfo
@@ -65,5 +65,11 @@ public interface ProjectInfoService {
      * @param userInfo
      */
     void submitProject(String projectId, String code, UserInfo userInfo);
+
+    /**
+     * 运行项目
+     * @param projectId
+     */
+    String runProject(String projectId);
 
 }
