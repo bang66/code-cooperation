@@ -20,10 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author zhangpeng
@@ -132,13 +130,21 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
             throw new BizException(BizError.ILLEGAL_REQUEST);
         }
         String userName = userInfo.getName();
-        List<CommentInfo> commentInfoList = commentInfoJPA.searchHotProjects();
-        if (CollectionUtils.isNotEmpty(commentInfoList) && commentInfoList.size() > 5) {
-            commentInfoList = commentInfoList.subList(0, 4);
+        List<CommentInfo> commentInfoList = commentInfoJPA.findAll();
+        List<CommentInfo> commentInfos = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(commentInfoList)) {
+            Map<String, List<CommentInfo>> commentInfoMap = commentInfoList.stream().collect(Collectors.groupingBy(CommentInfo::getProjectId));
+            List<CommentInfo> finalCommentInfos = commentInfos;
+            commentInfoMap.entrySet().stream().forEach(commentInfo -> finalCommentInfos.add(commentInfo.getValue().get(0)));
+            commentInfos = finalCommentInfos;
+        }
+
+        if (CollectionUtils.isNotEmpty(commentInfos) && commentInfos.size() > 5) {
+            commentInfos = commentInfos.subList(0, 4);
         }
         List<ProjectListDTO> projectList = new ArrayList<>();
-        if (CollectionUtils.isNotEmpty(commentInfoList)) {
-            for (CommentInfo commentInfo : commentInfoList) {
+        if (CollectionUtils.isNotEmpty(commentInfos)) {
+            for (CommentInfo commentInfo : commentInfos) {
                 Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(commentInfo.getProjectId());
                 ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
                 String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());

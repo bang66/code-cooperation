@@ -16,9 +16,6 @@ public interface CommentInfoJPA extends JpaRepository<CommentInfo, Long> {
 
     List<CommentInfo> findByProjectId(String projectId);
 
-    @Query(nativeQuery = true, value = "select CommentInfo from CommentInfo c group by c.projectId order by c.createTime desc ")
-    List<CommentInfo> searchHotProjects();
-
     Optional<CommentInfo> findByUserIdAndMessageNotNull(Long userId);
 
 }

@@ -96,3 +96,57 @@ CodeCooperation
 }
 
 ```
+
+
+
+
+#### 3.1首页
+
++ 接口：/api/v1/homePage/get
++ 方法：GET
++ 参数：仅共通参数
+
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": {
+        "userName": "用户xAtx",
+        "projectList": [
+            {
+                "projectId": "PYi17qi0",
+                "name": "Test",
+                "code": ""
+            }
+        ]
+    }
+}
+
+```
+
+
+
+
+
+#### 3.2创建项目
+
++ 接口：/api/v1/project/create
++ 方法：POST
++ 参数：共通参数及以下
+
+|字段名字|描述|类型|是否必须|值(举例)|
+|---|---|---|---|---|
+|projectName|项目名字|String|yes|Test|
+|projectDesc|项目简介|String|yes|测试|
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": "PYi17qi0"
+}
+
+```
