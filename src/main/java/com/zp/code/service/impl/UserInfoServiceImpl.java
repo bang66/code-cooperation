@@ -47,6 +47,11 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         if (!code.equals(getCode)) {
             throw new BizException(BizError.CODE_ERROR);
         }
+        Optional<UserInfo> optionalUserInfo = userInfoJPA.findByEmlAddr(emlAddr);
+        boolean isExisted = optionalUserInfo.isPresent();
+        if (isExisted) {
+            throw new BizException(BizError.ACCOUNT_ALREADY_REGIST);
+        }
         UserInfo userInfo = UserInfo.builder()
                 .emlAddr(emlAddr)
                 .passwd(passwd)
@@ -65,7 +70,6 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
             throw new BizException(BizError.PARAM_ERROR);
         }
         Optional<UserInfo> optionalUserInfo = userInfoJPA.findByToken(token);
-        UserInfo userInfo = optionalUserInfo.orElseThrow(() -> new BizException(BizError.ILLEGAL_REQUEST));
-        return userInfo;
+        return optionalUserInfo.orElseThrow(() -> new BizException(BizError.ILLEGAL_REQUEST));
     }
 }
