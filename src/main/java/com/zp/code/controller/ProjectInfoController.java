@@ -20,23 +20,6 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class ProjectInfoController extends BaseController {
 
-
-    @RequestMapping(value = "/v1/project/join", method = RequestMethod.GET)
-    @WebLog
-    public Object getJoinProject() {
-        UserInfo userInfo = getUserInfoByToken();
-        List<ProjectListDTO> projectListDTOS = projectInfoService.joinProject(userInfo);
-        return success(projectListDTOS);
-    }
-
-    @RequestMapping(value = "/v1/project/favourite", method = RequestMethod.GET)
-    @WebLog
-    public Object getFavouriteProject() {
-        UserInfo userInfo = getUserInfoByToken();
-        List<ProjectListDTO> projectListDTOS = projectInfoService.favouriteProject(userInfo);
-        return success(projectListDTOS);
-    }
-
     @RequestMapping(value = "/v1/project/detail", method = RequestMethod.GET)
     @WebLog
     public Object getProjectDetail(@RequestParam String projectId) {

@@ -129,9 +129,29 @@ public class CommandLineUtils {
         return resBuffer.toString();
     }
 
+    /**
+     * 读取项目代码
+     * @param projectId
+     * @param projectName
+     */
+    public static String readCode(String projectId, String projectName) {
+        StringBuffer codeRes = new StringBuffer();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("./ProSource/" + projectId + "/" + projectName +".java"));
+            String str;
+            while ((str = in.readLine()) != null) {
+                codeRes.append(str.toString() + "\n");
+            }
+        } catch (IOException e) {
+            logger.error("[ReadCode] err:{}", e);
+        }
+        return codeRes.toString();
+    }
+
 
     public static void main(String[] args) {
         CommandLineUtils.runProject("123e", "Test");
+        System.out.println(CommandLineUtils.readCode("123e", "Test"));
     }
 
 }

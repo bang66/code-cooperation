@@ -43,11 +43,11 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         List<ProjectListDTO> projectListDTOS = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(commentInfoList)) {
             for (CommentInfo commentInfo : commentInfoList) {
-                //todo 获取代码
-                String code = "";
-
                 Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(commentInfo.getProjectId());
                 ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+
+                String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());
+
                 ProjectListDTO projectListDTO = ProjectListDTO.builder()
                         .name(projectInfo.getProjectName())
                         .projectId(commentInfo.getProjectId())
@@ -68,12 +68,9 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         List<ProjectListDTO> projectListDTOS = new ArrayList<>();
         List<String> projectIdList = JSON.parseArray(favourites, String.class);
         for (String projectId : projectIdList) {
-            //todo 获取代码
-            String code = "";
-
-
             Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(projectId);
             ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+            String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());
             ProjectListDTO projectListDTO = ProjectListDTO.builder()
                     .name(projectInfo.getProjectName())
                     .projectId(projectInfo.getProjectId())
@@ -91,9 +88,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         }
         Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(projectId);
         ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
-        //todo 获取代码
-        String code = "";
-
+        String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());
         List<CommentInfo> commentInfoList = commentInfoJPA.findByProjectId(projectId);
         List<MessageDTO> messageDTOList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(commentInfoList)) {
@@ -144,11 +139,9 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         List<ProjectListDTO> projectList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(commentInfoList)) {
             for (CommentInfo commentInfo : commentInfoList) {
-                //todo 获取代码
-                String code = "";
-
                 Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(commentInfo.getProjectId());
                 ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+                String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());
                 ProjectListDTO projectListDTO = ProjectListDTO.builder()
                         .projectId(projectInfo.getProjectId())
                         .name(projectInfo.getProjectName())
