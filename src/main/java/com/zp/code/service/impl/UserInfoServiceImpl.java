@@ -29,7 +29,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         }
         Optional<UserInfo> optionalUserInfo = userInfoJPA.findByEmlAddr(emlAddr);
         UserInfo userInfo = optionalUserInfo.orElseThrow(() -> new BizException(BizError.ACCOUNT_NOT_REGIST));
-        if (StringUtils.isNoneBlank(userInfo.getPasswd()) && userInfo.getPasswd() != passwd) {
+        if (StringUtils.isNoneBlank(userInfo.getPasswd()) && !userInfo.getPasswd().equals(passwd)) {
             throw new BizException(BizError.ACCOUNT_ERROR);
         }
         return userInfo;

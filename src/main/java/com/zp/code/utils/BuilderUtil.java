@@ -22,7 +22,7 @@ public class BuilderUtil {
      * @return
      */
     public static String generateCode() {
-        return RandomStringUtils.random(6);
+        return RandomStringUtils.randomNumeric(6);
     }
 
     /**
