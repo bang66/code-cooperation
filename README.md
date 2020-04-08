@@ -14,6 +14,33 @@ CodeCooperation
 |t|用户token|String|no|asidj9123ja|
 
 
+
+### 异常码
+
++ 以下为系统错误
+
+|异常码|描述|含义|
+|---|---|---|
+|1000|prams error|入参参数错误|
+|1001|system error|服务器异常|
+|1002|illegal request|非法请求(即无token，前端需跳至登录)|
+|1003|data missing|查询数据不存在|
+
+
++ 以下为业务错误
+
+|异常码|描述|含义|
+|---|---|---|
+|2000|account error|账号有误(登录错误)|
+|2001|account not regist|账号未注册(前端需跳至注册)|
+|2002|mail send error|邮件验证码发送失败|
+|2003|this mailAddress not recive code|未向此邮箱发送验证码|
+|2004|this code is error|验证码有误|
+|2005|account already regist|此账号已注册(前端需跳至登录)|
+|2006|project already favourited|此项目已被收藏过|
+
+
+
 #### 1.发送验证码
 
 + 接口：/api/v1/send/code
