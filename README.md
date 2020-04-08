@@ -19,6 +19,7 @@ CodeCooperation
 + 接口：/api/v1/send/code
 + 方法：GET
 + 参数：如下
+
 |字段名字|描述|类型|是否必须|值(举例)|
 |---|---|---|---|---|
 |emlAddr|邮箱地址|String|yes|18138227923@qq.com|
