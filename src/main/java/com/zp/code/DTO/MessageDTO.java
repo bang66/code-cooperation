@@ -11,7 +11,10 @@ import lombok.Data;
 @Data
 @Builder
 public class MessageDTO {
+
     private Long userId;
 
     private String message;
+
+    private String userName;
 }

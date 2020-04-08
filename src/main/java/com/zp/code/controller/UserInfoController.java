@@ -50,19 +50,19 @@ public class UserInfoController extends BaseController {
         return success();
     }
 
-    @RequestMapping(value = "/v1/project/join", method = RequestMethod.GET)
+    @RequestMapping(value = "/v1/mine/join", method = RequestMethod.GET)
     @WebLog
     public Object getJoinProject() {
         UserInfo userInfo = getUserInfoByToken();
-        List<ProjectListDTO> projectListDTOS = projectInfoService.joinProject(userInfo);
+        List<ProjectListDTO> projectListDTOS = projectInfoService.getJoinProject(userInfo);
         return success(projectListDTOS);
     }
 
-    @RequestMapping(value = "/v1/project/favourite", method = RequestMethod.GET)
+    @RequestMapping(value = "/v1/mine/favourite", method = RequestMethod.GET)
     @WebLog
     public Object getFavouriteProject() {
         UserInfo userInfo = getUserInfoByToken();
-        List<ProjectListDTO> projectListDTOS = projectInfoService.favouriteProject(userInfo);
+        List<ProjectListDTO> projectListDTOS = projectInfoService.getFavouriteProject(userInfo);
         return success(projectListDTOS);
     }
 }

@@ -20,6 +20,7 @@ public class BizError {
     public static Response NOT_SEND_CODE = new Response(2003, "this mailAddress not recive code");
     public static Response CODE_ERROR = new Response(2004, "this code is error");
     public static Response ACCOUNT_ALREADY_REGIST = new Response(2005, "account already regist");
+    public static Response PROJECT_ALREADY_FAVOURITED = new Response(2006, "project already favourited");
 
 
 }

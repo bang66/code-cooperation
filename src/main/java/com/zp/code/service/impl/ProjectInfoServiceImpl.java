@@ -33,7 +33,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
     private static final Logger logger = LoggerFactory.getLogger(ProjectInfoServiceImpl.class);
 
     @Override
-    public List<ProjectListDTO> joinProject(UserInfo userInfo) {
+    public List<ProjectListDTO> getJoinProject(UserInfo userInfo) {
         if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {
             throw new BizException(BizError.PARAM_ERROR);
         }
@@ -58,7 +58,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
     }
 
     @Override
-    public List<ProjectListDTO> favouriteProject(UserInfo userInfo) {
+    public List<ProjectListDTO> getFavouriteProject(UserInfo userInfo) {
         if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {
             throw new BizException(BizError.PARAM_ERROR);
         }
@@ -91,9 +91,16 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         List<MessageDTO> messageDTOList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(commentInfoList)) {
             for (CommentInfo commentInfo : commentInfoList) {
+                if (null == commentInfo.getMessage()) {
+                    continue;
+                }
+                Optional<UserInfo> optionalUserInfo = userInfoJPA.findById(commentInfo.getUserId());
+                UserInfo userInfo = optionalUserInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+                String userName = userInfo.getName();
                 MessageDTO messageDTO = MessageDTO.builder()
                         .message(commentInfo.getMessage())
                         .userId(commentInfo.getUserId())
+                        .userName(userName)
                         .build();
                 messageDTOList.add(messageDTO);
             }
@@ -223,5 +230,34 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         String res = CommandLineUtils.runProject(projectId, projectName);
         logger.info("[RunProject] res:{}", res);
         return res;
+    }
+
+    @Override
+    public void favouriteProject(String projectId, UserInfo userInfo) {
+        if (StringUtils.isAnyBlank(projectId)) {
+            throw new BizException(BizError.PARAM_ERROR);
+        }
+        if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {
+            throw new BizException(BizError.ILLEGAL_REQUEST);
+        }
+        List<String> favouriteList = new ArrayList<>();
+        if (StringUtils.isNoneEmpty(userInfo.getFavorites())) {
+            favouriteList = JSON.parseArray(userInfo.getFavorites(), String.class);
+            if (favouriteList.contains(projectId)) {
+                throw new BizException(BizError.PROJECT_ALREADY_FAVOURITED);
+            }
+        }
+        favouriteList.add(projectId);
+        String favouriteStr = JSON.toJSONString(favouriteList);
+        UserInfo userInfoNow = new UserInfo();
+        userInfoNow.setId(userInfo.getId());
+        userInfoNow.setEmlAddr(userInfo.getEmlAddr());
+        userInfoNow.setName(userInfo.getName());
+        userInfoNow.setPasswd(userInfo.getPasswd());
+        userInfoNow.setToken(userInfo.getToken());
+        userInfoNow.setCreateTime(userInfo.getCreateTime());
+        userInfoNow.setFavorites(favouriteStr);
+        userInfoNow.setUpdateTime(System.currentTimeMillis());
+        userInfoJPA.save(userInfoNow);
     }
 }

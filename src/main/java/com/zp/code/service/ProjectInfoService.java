@@ -19,14 +19,14 @@ public interface ProjectInfoService {
      * @param userInfo
      * @return
      */
-    List<ProjectListDTO> joinProject(UserInfo userInfo);
+    List<ProjectListDTO> getJoinProject(UserInfo userInfo);
 
     /**
      * 我收藏的项目
      * @param userInfo
      * @return
      */
-    List<ProjectListDTO> favouriteProject(UserInfo userInfo);
+    List<ProjectListDTO> getFavouriteProject(UserInfo userInfo);
 
     /**
      * 获取项目详情
@@ -71,5 +71,12 @@ public interface ProjectInfoService {
      * @param projectId
      */
     String runProject(String projectId);
+
+    /**
+     * 收藏项目
+     * @param projectId
+     * @param userInfo
+     */
+    void favouriteProject(String projectId, UserInfo userInfo);
 
 }

@@ -68,4 +68,12 @@ public class ProjectInfoController extends BaseController {
         String res = projectInfoService.runProject(projectId);
         return success(res);
     }
+
+    @RequestMapping(value = "/v1/project/favourite", method = RequestMethod.POST)
+    @WebLog
+    public Object favouriteProject(@RequestParam String projectId) {
+        UserInfo userInfo = getUserInfoByToken();
+        projectInfoService.favouriteProject(projectId, userInfo);
+        return success();
+    }
 }

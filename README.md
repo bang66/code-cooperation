@@ -150,3 +150,111 @@ CodeCooperation
 }
 
 ```
+
+
+
+
+#### 3.3提交评论
+
++ 接口：/api/v1/comment/submit
++ 方法：POST
++ 参数：共通参数及以下
+
+|字段名字|描述|类型|是否必须|值(举例)|
+|---|---|---|---|---|
+|projectId|项目id|String|yes|PYi17qi0|
+|comment|评论内容|String|yes|very good|
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": null
+}
+
+```
+
+
+
+
+#### 3.4项目详情
+
++ 接口：/api/v1/project/detail
++ 方法：GET
++ 参数：共通参数及以下
+
+|字段名字|描述|类型|是否必须|值(举例)|
+|---|---|---|---|---|
+|projectId|项目id|String|yes|PYi17qi0|
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": {
+        "projectId": "PYi17qi0",
+        "name": "Test",
+        "code": "public class Test{\n    public static void main(String[] args) {\n        System.out.println(\"hello world\");\n    }\n}\n",
+        "desc": "测试",
+        "messageDTOList": [
+            {
+                "userId": 1,
+                "message": "very good",
+                "userName": "用户xAtx"
+            }
+        ]
+    }
+}
+
+```
+
+
+
+
+#### 3.5收藏项目
+
++ 接口：/api/v1/project/favourite
++ 方法：POST
++ 参数：共通参数及以下
+
+|字段名字|描述|类型|是否必须|值(举例)|
+|---|---|---|---|---|
+|projectId|项目id|String|yes|PYi17qi0|
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": null
+}
+
+```
+
+
+
+
+#### 4.1查看我收藏的项目
+
++ 接口：/api/v1/project/favourite
++ 方法：GET
++ 参数：共通参数
+
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": [
+        {
+            "projectId": "PYi17qi0",
+            "name": "Test",
+            "code": "public class Test{\n    public static void main(String[] args) {\n        System.out.println(\"hello world\");\n    }\n}\n"
+        }
+    ]
+}
+
+```
