@@ -16,6 +16,8 @@ public class HomePageDTO {
 
     private String userName;
 
+    private String userSignature;
+
     private List<ProjectListDTO> projectList;
 
 }

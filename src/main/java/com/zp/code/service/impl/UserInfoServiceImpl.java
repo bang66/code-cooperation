@@ -1,6 +1,7 @@
 package com.zp.code.service.impl;
 
 import com.zp.code.common.BizError;
+import com.zp.code.common.GlobalConstant;
 import com.zp.code.handle.BizException;
 import com.zp.code.model.UserInfo;
 import com.zp.code.service.BaseService;
@@ -57,6 +58,7 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
                 .passwd(passwd)
                 .name(BuilderUtil.generateUserName())
                 .token(BuilderUtil.generateToken())
+                .signature(GlobalConstant.USER_SIGNATURE)
                 .createTime(System.currentTimeMillis())
                 .build();
         userInfoJPA.save(userInfo);

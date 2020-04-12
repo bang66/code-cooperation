@@ -31,6 +31,8 @@ public class UserInfo extends BasicModel implements Serializable {
     /** ["pid1", "pid2"] */
     private String favorites;
 
+    private String signature;
+
     private long createTime;
 
     private long updateTime;

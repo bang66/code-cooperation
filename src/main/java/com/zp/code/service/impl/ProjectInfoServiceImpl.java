@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -134,6 +135,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
             throw new BizException(BizError.ILLEGAL_REQUEST);
         }
         String userName = userInfo.getName();
+        String userSignature = userInfo.getSignature();
         List<CommentInfo> commentInfoList = commentInfoJPA.findAll();
         List<CommentInfo> commentInfos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(commentInfoList)) {
@@ -148,6 +150,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         }
         List<ProjectListDTO> projectList = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(commentInfos)) {
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             for (CommentInfo commentInfo : commentInfos) {
                 Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(commentInfo.getProjectId());
                 ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
@@ -156,12 +159,14 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
                         .projectId(projectInfo.getProjectId())
                         .name(projectInfo.getProjectName())
                         .code(code)
+                        .createTime(dateformat.format(projectInfo.getCreateTime()))
                         .build();
                 projectList.add(projectListDTO);
             }
         }
         return HomePageDTO.builder()
                 .userName(userName)
+                .userSignature(userSignature)
                 .projectList(projectList)
                 .build();
     }

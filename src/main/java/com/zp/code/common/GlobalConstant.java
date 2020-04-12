@@ -10,4 +10,6 @@ public class GlobalConstant {
 
     public static final String PREFIX_USER_NAME = "用户";
 
+    public static final String USER_SIGNATURE = "这个人很懒，什么都没有留下";
+
 }
