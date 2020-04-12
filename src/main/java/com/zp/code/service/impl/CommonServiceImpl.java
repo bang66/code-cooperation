@@ -34,5 +34,6 @@ public class CommonServiceImpl implements CommonService {
             logger.error("[Mail] mail send error : {}", e);
             throw new BizException(BizError.SEND_ERROR);
         }
+        logger.info("[SendCode] code:{}", code);
     }
 }

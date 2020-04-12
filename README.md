@@ -87,6 +87,7 @@ CodeCooperation
         "token": "Ofr6Payqm0xu6umd",
         "name": "用户xAtx",
         "favorites": null,
+        "signature":"这个人很懒，什么都没有留下",
         "createTime": 1586229795534,
         "updateTime": 0
     }
@@ -119,6 +120,7 @@ CodeCooperation
         "token": "Ofr6Payqm0xu6umd",
         "name": "用户xAtx",
         "favorites": null,
+        "signature":"这个人很懒，什么都没有留下",
         "createTime": 1586229795534,
         "updateTime": 0
     }
@@ -143,11 +145,13 @@ CodeCooperation
     "msg": "success",
     "data": {
         "userName": "用户xAtx",
+        "userSignature": "test",
         "projectList": [
             {
                 "projectId": "PYi17qi0",
                 "name": "Test",
-                "code": ""
+                "code": "",
+                "createTime": "2020-04-08 01:54:46"
             }
         ]
     }
