@@ -137,7 +137,7 @@ public class CommandLineUtils {
     public static String readCode(String projectId, String projectName) {
         StringBuffer codeRes = new StringBuffer();
         try {
-            BufferedReader in = new BufferedReader(new FileReader("./ProSource/" + projectId + "/" + projectName +".java"));
+            BufferedReader in = new BufferedReader(new FileReader("ProSource/" + projectId + "/" + projectName +".java"));
             String str;
             while ((str = in.readLine()) != null) {
                 codeRes.append(str.toString() + "\n");
