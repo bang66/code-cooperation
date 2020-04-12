@@ -16,6 +16,8 @@ public interface CommentInfoJPA extends JpaRepository<CommentInfo, Long> {
 
     List<CommentInfo> findByProjectId(String projectId);
 
+    List<CommentInfo> findByProjectIdOrderByCreateTimeAsc(String projectId);
+
     Optional<CommentInfo> findByUserIdAndMessageNotNull(Long userId);
 
 }

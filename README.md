@@ -301,6 +301,28 @@ CodeCooperation
 
 
 
+#### 3.7运行项目
+
++ 接口：/api/v1/project/run
++ 方法：POST
++ 参数：共通参数及以下
+
+|字段名字|描述|类型|是否必须|值(举例)|
+|---|---|---|---|---|
+|projectId|项目id|String|yes|PYi17qi0|
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": "hello world\n"
+}
+
+```
+
+
+
 
 #### 4.1查看我收藏的项目
 

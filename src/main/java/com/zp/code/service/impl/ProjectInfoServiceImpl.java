@@ -152,6 +152,12 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         if (CollectionUtils.isNotEmpty(commentInfos)) {
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             for (CommentInfo commentInfo : commentInfos) {
+                List<CommentInfo> projectCommentInfo = commentInfoJPA.findByProjectId(commentInfo.getProjectId());
+                if (CollectionUtils.isEmpty(projectCommentInfo)) {
+                    throw new BizException(BizError.DATA_MISS);
+                }
+                Optional<UserInfo> optionalUserInfo = userInfoJPA.findById(projectCommentInfo.get(0).getUserId());
+                UserInfo userInfoById = optionalUserInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
                 Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(commentInfo.getProjectId());
                 ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
                 String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());
@@ -160,6 +166,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
                         .name(projectInfo.getProjectName())
                         .code(code)
                         .createTime(dateformat.format(projectInfo.getCreateTime()))
+                        .creator(userInfoById.getName())
                         .build();
                 projectList.add(projectListDTO);
             }

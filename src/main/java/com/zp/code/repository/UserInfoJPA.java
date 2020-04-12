@@ -13,4 +13,6 @@ public interface UserInfoJPA extends JpaRepository<UserInfo, Long> {
     Optional<UserInfo> findByEmlAddr(String emlAddr);
 
     Optional<UserInfo> findByToken(String token);
+
+    Optional<UserInfo> findById(Long userId);
 }
