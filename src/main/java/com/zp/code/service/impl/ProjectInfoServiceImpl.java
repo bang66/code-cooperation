@@ -1,10 +1,7 @@
 package com.zp.code.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.zp.code.DTO.HomePageDTO;
-import com.zp.code.DTO.MessageDTO;
-import com.zp.code.DTO.ProjectDetailDTO;
-import com.zp.code.DTO.ProjectListDTO;
+import com.zp.code.DTO.*;
 import com.zp.code.common.BizError;
 import com.zp.code.handle.BizException;
 import com.zp.code.model.CommentInfo;
@@ -199,8 +196,13 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
     }
 
     @Override
-    public void submitProject(String projectId, String code, UserInfo userInfo) {
-        if (StringUtils.isAnyBlank(projectId, code)) {
+    public void submitProject(ProjectSubmitDTO projectSubmitDTO, UserInfo userInfo) {
+        if (Objects.isNull(projectSubmitDTO) || Objects.isNull(projectSubmitDTO.getCode())) {
+            throw new BizException(BizError.PARAM_ERROR);
+        }
+        String projectId = projectSubmitDTO.getProjectId();
+        String code = projectSubmitDTO.getCode();
+        if (StringUtils.isAnyBlank(projectId)) {
             throw new BizException(BizError.PARAM_ERROR);
         }
         if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {

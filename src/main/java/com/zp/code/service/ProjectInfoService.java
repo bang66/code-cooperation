@@ -3,6 +3,7 @@ package com.zp.code.service;
 import com.zp.code.DTO.HomePageDTO;
 import com.zp.code.DTO.ProjectDetailDTO;
 import com.zp.code.DTO.ProjectListDTO;
+import com.zp.code.DTO.ProjectSubmitDTO;
 import com.zp.code.model.UserInfo;
 
 import java.util.List;
@@ -60,11 +61,10 @@ public interface ProjectInfoService {
 
     /**
      * 提交项目(代码)
-     * @param projectId
-     * @param code
+     * @param projectSubmitDTO
      * @param userInfo
      */
-    void submitProject(String projectId, String code, UserInfo userInfo);
+    void submitProject(ProjectSubmitDTO projectSubmitDTO, UserInfo userInfo);
 
     /**
      * 运行项目

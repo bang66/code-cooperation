@@ -264,6 +264,39 @@ CodeCooperation
 
 
 
+#### 3.6提交项目
+
++ 接口：/api/v1/project/submit
++ 方法：POST
++ 参数：共通参数及以下(请求体为json)
+
+|字段名字|描述|类型|是否必须|值(举例)|
+|---|---|---|---|---|
+|projectId|项目id|String|yes|PYi17qi0|
+|code|项目代码|String|yes|asdasdasd|
+
++请求体：
+```
+{
+    "projectId":"PYi17qi0", 
+    "code":"public class Test{\n    public static void main(String[] args) {\n        System.out.println(\"hello world\");\n    }\n}"
+}
+
+```
+
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": null
+}
+
+```
+
+
+
 
 #### 4.1查看我收藏的项目
 
