@@ -327,7 +327,7 @@ CodeCooperation
 
 #### 4.1查看我收藏的项目
 
-+ 接口：/api/v1/project/favourite
++ 接口：/api/v1/mine/favourite
 + 方法：GET
 + 参数：仅共通参数
 
@@ -341,7 +341,37 @@ CodeCooperation
         {
             "projectId": "PYi17qi0",
             "name": "Test",
-            "code": "public class Test{\n    public static void main(String[] args) {\n        System.out.println(\"hello world\");\n    }\n}\n"
+            "code": "public class Test{\n    public static void main(String[] args) {\n        System.out.println(\"hello world\");\n    }\n}\n",
+            "createTime": "2020-04-08 01:54:46",
+            "creator": "用户12hu"
+        }
+    ]
+}
+
+```
+
+
+
+
+#### 4.2查看我参与的项目
+
++ 接口：/api/v1/mine/join
++ 方法：GET
++ 参数：仅共通参数
+
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": [
+        {
+            "projectId": "PYi17qi0",
+            "name": "Test",
+            "code": "public class Test{\n    public static void main(String[] args) {\n        System.out.println(\"hello world\");\n    }\n}\n",
+            "createTime": "2020-04-08 01:54:46",
+            "creator": "用户12hu"
         }
     ]
 }

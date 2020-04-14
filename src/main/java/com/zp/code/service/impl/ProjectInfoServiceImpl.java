@@ -35,12 +35,18 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         if (Objects.isNull(userInfo) || Objects.isNull(userInfo.getId())) {
             throw new BizException(BizError.PARAM_ERROR);
         }
-        List<CommentInfo> commentInfoList = commentInfoJPA.findByUserId(userInfo.getId());
+        List<CommentInfo> commentInfoList = commentInfoJPA.findByUserIdOrderByCreateTimeAsc(userInfo.getId());
+        commentInfoList = commentInfoList.stream().collect(Collectors.collectingAndThen(
+                Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(CommentInfo::getProjectId))), ArrayList::new));
         List<ProjectListDTO> projectListDTOS = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(commentInfoList)) {
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             for (CommentInfo commentInfo : commentInfoList) {
                 Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(commentInfo.getProjectId());
                 ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+                Optional<UserInfo> optionalUserInfo = userInfoJPA.findById(commentInfo.getUserId());
+                UserInfo userInfoById = optionalUserInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+
 
                 String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());
 
@@ -48,6 +54,8 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
                         .name(projectInfo.getProjectName())
                         .projectId(commentInfo.getProjectId())
                         .code(code)
+                        .createTime(dateformat.format(projectInfo.getCreateTime()))
+                        .creator(userInfoById.getName())
                         .build();
                 projectListDTOS.add(projectListDTO);
             }
@@ -63,14 +71,23 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         String favourites = userInfo.getFavorites();
         List<ProjectListDTO> projectListDTOS = new ArrayList<>();
         List<String> projectIdList = JSON.parseArray(favourites, String.class);
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (String projectId : projectIdList) {
             Optional<ProjectInfo> optionalProjectInfo = projectInfoJPA.findByProjectId(projectId);
             ProjectInfo projectInfo = optionalProjectInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+            List<CommentInfo> commentInfoList = commentInfoJPA.findByProjectIdOrderByCreateTimeAsc(projectId);
+            if (CollectionUtils.isEmpty(commentInfoList)) {
+                continue;
+            }
+            Optional<UserInfo> optionalUserInfo = userInfoJPA.findById(commentInfoList.get(0).getUserId());
+            UserInfo userInfoById = optionalUserInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
             String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());
             ProjectListDTO projectListDTO = ProjectListDTO.builder()
                     .name(projectInfo.getProjectName())
                     .projectId(projectInfo.getProjectId())
                     .code(code)
+                    .createTime(dateformat.format(projectInfo.getCreateTime()))
+                    .creator(userInfoById.getName())
                     .build();
             projectListDTOS.add(projectListDTO);
         }
@@ -152,7 +169,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         if (CollectionUtils.isNotEmpty(commentInfos)) {
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             for (CommentInfo commentInfo : commentInfos) {
-                List<CommentInfo> projectCommentInfo = commentInfoJPA.findByProjectId(commentInfo.getProjectId());
+                List<CommentInfo> projectCommentInfo = commentInfoJPA.findByProjectIdOrderByCreateTimeAsc(commentInfo.getProjectId());
                 if (CollectionUtils.isEmpty(projectCommentInfo)) {
                     throw new BizException(BizError.DATA_MISS);
                 }
