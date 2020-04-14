@@ -45,7 +45,7 @@ public class MailUtil {
         message.setSubject("CodeCooperation", "UTF-8");
 
         // 5. Content: 邮件正文（可以使用html标签）
-        message.setContent("您的注册验证码为 : " + code, "text/html;charset=UTF-8");
+        message.setContent("[Code-Cooperation] 您的注册验证码为 : " + code, "text/html;charset=UTF-8");
         // 6. 设置发件时间
         message.setSentDate(new Date());
 
