@@ -65,4 +65,13 @@ public class UserInfoController extends BaseController {
         List<ProjectListDTO> projectListDTOS = projectInfoService.getFavouriteProject(userInfo);
         return success(projectListDTOS);
     }
+
+    @RequestMapping(value = "/v1/update/userInfo", method = RequestMethod.POST)
+    @WebLog
+    public Object updateUserInfo(@RequestParam String userName,
+                                 @RequestParam String signature) {
+        UserInfo userInfo = getUserInfoByToken();
+        userInfoService.updateUserInfo(userName, signature, userInfo);
+        return success();
+    }
 }

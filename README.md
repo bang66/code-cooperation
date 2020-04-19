@@ -377,3 +377,27 @@ CodeCooperation
 }
 
 ```
+
+
+
+
+#### 4.3修改个人信息
+
++ 接口：/api/v1/update/userInfo
++ 方法：POST
++ 参数：共通参数及以下
+
+|字段名字|描述|类型|是否必须|值(举例)|
+|---|---|---|---|---|
+|userName|用户昵称|String|yes|阿三等奖|
+|signature|个性签名|String|yes|asdasdasd|
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": null
+}
+
+```

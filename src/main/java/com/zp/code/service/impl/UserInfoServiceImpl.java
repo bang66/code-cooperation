@@ -74,4 +74,28 @@ public class UserInfoServiceImpl extends BaseService implements UserInfoService 
         Optional<UserInfo> optionalUserInfo = userInfoJPA.findByToken(token);
         return optionalUserInfo.orElseThrow(() -> new BizException(BizError.ILLEGAL_REQUEST));
     }
+
+    @Override
+    public void updateUserInfo(String userName, String signature, UserInfo userInfo) {
+        if (StringUtils.isAnyBlank(userName, signature)) {
+            throw new BizException(BizError.PARAM_ERROR);
+        }
+        if (null == userInfo) {
+            throw new BizException(BizError.PARAM_ERROR);
+        }
+        Optional<UserInfo> optionalUserInfo = userInfoJPA.findByToken(userInfo.getToken());
+        UserInfo userInfoDb = optionalUserInfo.orElseThrow(() -> new BizException(BizError.ILLEGAL_REQUEST));
+
+        UserInfo userInfoNew = new UserInfo();
+        userInfoNew.setId(userInfoDb.getId());
+        userInfoNew.setEmlAddr(userInfoDb.getEmlAddr());
+        userInfoNew.setName(userName);
+        userInfoNew.setPasswd(userInfoDb.getPasswd());
+        userInfoNew.setToken(userInfoDb.getToken());
+        userInfoNew.setCreateTime(userInfoDb.getCreateTime());
+        userInfoNew.setFavorites(userInfoDb.getFavorites());
+        userInfoNew.setUpdateTime(System.currentTimeMillis());
+        userInfoNew.setSignature(signature);
+        userInfoJPA.save(userInfoNew);
+    }
 }

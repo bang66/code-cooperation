@@ -158,7 +158,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         if (CollectionUtils.isNotEmpty(commentInfoList)) {
             Map<String, List<CommentInfo>> commentInfoMap = commentInfoList.stream().collect(Collectors.groupingBy(CommentInfo::getProjectId));
             List<CommentInfo> finalCommentInfos = commentInfos;
-            commentInfoMap.entrySet().stream().forEach(commentInfo -> finalCommentInfos.add(commentInfo.getValue().get(0)));
+            commentInfoMap.forEach((key, value) -> finalCommentInfos.add(value.get(0)));
             commentInfos = finalCommentInfos;
         }
 
@@ -288,6 +288,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         userInfoNow.setToken(userInfo.getToken());
         userInfoNow.setCreateTime(userInfo.getCreateTime());
         userInfoNow.setFavorites(favouriteStr);
+        userInfoNow.setSignature(userInfo.getSignature());
         userInfoNow.setUpdateTime(System.currentTimeMillis());
         userInfoJPA.save(userInfoNow);
     }
