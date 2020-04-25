@@ -324,6 +324,36 @@ CodeCooperation
 
 
 
+#### 3.8项目模糊搜索
+
++ 接口：/api/v1/project/query
++ 方法：GET
++ 参数：共通参数及以下
+
+|字段名字|描述|类型|是否必须|值(举例)|
+|---|---|---|---|---|
+|keyWord|关键词|String|yes|测|
+
++ 结果：
+```
+{
+    "code": 0,
+    "msg": "success",
+    "data": [
+        {
+            "projectId": "PYi17qi0",
+            "name": "Test",
+            "code": "public class Test{\n    public static void main(String[] args) {\n        System.out.println(\"hello world\");\n    }\n}\n",
+            "createTime": "2020-04-08 01:54:47",
+            "creator": "张三"
+        }
+    ]
+}
+
+```
+
+
+
 
 #### 4.1查看我收藏的项目
 

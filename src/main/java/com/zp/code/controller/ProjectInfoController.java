@@ -73,4 +73,12 @@ public class ProjectInfoController extends BaseController {
         projectInfoService.favouriteProject(projectId, userInfo);
         return success();
     }
+
+    @RequestMapping(value = "/v1/project/query", method = RequestMethod.GET)
+    @WebLog
+    public Object queryProject(@RequestParam String keyWord) {
+        List<ProjectListDTO> resList = projectInfoService.queryProject(keyWord);
+        return success(resList);
+    }
+
 }

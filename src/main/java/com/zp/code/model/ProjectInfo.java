@@ -25,7 +25,7 @@ public class ProjectInfo extends BasicModel implements Serializable {
 
     private String projectName;
 
-    private String ProjectDesc;
+    private String projectDesc;
 
     private long createTime;
 

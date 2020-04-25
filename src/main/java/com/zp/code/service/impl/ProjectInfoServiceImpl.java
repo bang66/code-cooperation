@@ -212,7 +212,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         projectInfoJPA.save(ProjectInfo.builder()
                 .projectId(projectId)
                 .projectName(projectName)
-                .ProjectDesc(projectDesc)
+                .projectDesc(projectDesc)
                 .createTime(System.currentTimeMillis())
                 .build());
 
@@ -291,5 +291,34 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         userInfoNow.setSignature(userInfo.getSignature());
         userInfoNow.setUpdateTime(System.currentTimeMillis());
         userInfoJPA.save(userInfoNow);
+    }
+
+    @Override
+    public List<ProjectListDTO> queryProject(String keyWord) {
+        if (StringUtils.isAnyBlank(keyWord)) {
+            throw new BizException(BizError.PARAM_ERROR);
+        }
+        List<ProjectListDTO> resList = new ArrayList<>();
+        List<ProjectInfo> projectInfoList = projectInfoJPA.findByProjectDescLike("%" + keyWord + "%");
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (ProjectInfo projectInfo : projectInfoList) {
+            List<CommentInfo> commentInfoList = commentInfoJPA.findByProjectIdOrderByCreateTimeAsc(projectInfo.getProjectId());
+            if (CollectionUtils.isEmpty(commentInfoList)) {
+                throw new BizException(BizError.DATA_MISS);
+            }
+            Optional<UserInfo> optionalUserInfo = userInfoJPA.findById(commentInfoList.get(0).getUserId());
+            UserInfo userInfoById = optionalUserInfo.orElseThrow(() -> new BizException(BizError.DATA_MISS));
+            String code = CommandLineUtils.readCode(projectInfo.getProjectId(), projectInfo.getProjectName());
+
+            ProjectListDTO projectListDTO = ProjectListDTO.builder()
+                    .projectId(projectInfo.getProjectId())
+                    .name(projectInfo.getProjectName())
+                    .creator(userInfoById.getName())
+                    .createTime(dateformat.format(commentInfoList.get(0).getCreateTime()))
+                    .code(code)
+                    .build();
+            resList.add(projectListDTO);
+        }
+        return resList;
     }
 }

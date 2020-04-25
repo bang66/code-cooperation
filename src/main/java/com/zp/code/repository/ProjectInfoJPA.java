@@ -15,5 +15,6 @@ public interface ProjectInfoJPA extends JpaRepository<ProjectInfo, Long> {
 
     Optional<ProjectInfo> findByProjectName(String projectName);
 
+    List<ProjectInfo> findByProjectDescLike(String desc);
 
 }

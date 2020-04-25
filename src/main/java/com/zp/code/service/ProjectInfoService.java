@@ -79,4 +79,11 @@ public interface ProjectInfoService {
      */
     void favouriteProject(String projectId, UserInfo userInfo);
 
+    /**
+     * 模糊查询项目
+     * @param keyWord
+     * @return
+     */
+    List<ProjectListDTO> queryProject(String keyWord);
+
 }
