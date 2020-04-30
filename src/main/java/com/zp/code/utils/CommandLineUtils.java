@@ -1,5 +1,6 @@
 package com.zp.code.utils;
 
+import com.zp.code.model.CommentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,13 +118,17 @@ public class CommandLineUtils {
             logger.error("[CommandErr] err:{}", e);
         }
 
-        int i = 0;
-        for (String line : processList) {
-            i++;
-            if (i > 18) {
-                logger.info("[CommandResult] Midres:{}", line);
-                resBuffer.append(line + "\n");
+        int resIndex = 0;
+        for (int i = 0; i < processList.size(); i++) {
+            if (processList.get(i).startsWith("Successfully")) {
+                resIndex = i;
             }
+        }
+        resIndex += 1;
+        for (int i = resIndex; i < processList.size(); i++) {
+            String line = processList.get(i);
+            logger.info("[CommandResult] Midres:{}", line);
+            resBuffer.append(line + "\n");
         }
         logger.info("[CommandResult] res:{}", resBuffer.toString());
         return resBuffer.toString();
@@ -151,7 +156,7 @@ public class CommandLineUtils {
 
     public static void main(String[] args) {
         CommandLineUtils.runProject("123e", "Test");
-        System.out.println(CommandLineUtils.readCode("123e", "Test"));
+//        System.out.println(CommandLineUtils.readCode("123e", "Test"));
     }
 
 }
