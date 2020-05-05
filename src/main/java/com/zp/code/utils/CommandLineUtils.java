@@ -111,6 +111,7 @@ public class CommandLineUtils {
             String line;
             while ((line = input.readLine()) != null) {
                 processList.add(line);
+                logger.info("======={}", line.toString());
             }
             input.close();
         } catch (IOException e) {
