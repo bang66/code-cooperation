@@ -1,6 +1,5 @@
 package com.zp.code.utils;
 
-import com.zp.code.model.CommentInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -136,13 +135,14 @@ public class CommandLineUtils {
 
     /**
      * 读取项目代码
+     *
      * @param projectId
      * @param projectName
      */
     public static String readCode(String projectId, String projectName) {
         StringBuffer codeRes = new StringBuffer();
         try {
-            BufferedReader in = new BufferedReader(new FileReader("./ProSource/" + projectId + "/" + projectName +".java"));
+            BufferedReader in = new BufferedReader(new FileReader("./ProSource/" + projectId + "/" + projectName + ".java"));
             String str;
             while ((str = in.readLine()) != null) {
                 codeRes.append(str.toString() + "\n");
@@ -151,6 +151,17 @@ public class CommandLineUtils {
             logger.error("[ReadCode] err:{}", e);
         }
         return codeRes.toString();
+    }
+
+    public static String handleCode(String content) {
+
+
+        content = content.replaceAll("<p>", "");
+        content = content.replaceAll("</p >", "\n");
+        content = content.replaceAll("<br>", "\n");//保留br标签和p标签
+
+        return content;
+
     }
 
 

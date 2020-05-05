@@ -231,6 +231,7 @@ public class ProjectInfoServiceImpl extends BaseService implements ProjectInfoSe
         }
         String projectId = projectSubmitDTO.getProjectId();
         String code = projectSubmitDTO.getCode();
+        code = CommandLineUtils.handleCode(code);
         if (StringUtils.isAnyBlank(projectId)) {
             throw new BizException(BizError.PARAM_ERROR);
         }
