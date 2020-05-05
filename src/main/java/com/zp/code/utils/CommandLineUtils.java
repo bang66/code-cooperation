@@ -156,6 +156,7 @@ public class CommandLineUtils {
     public static String handleCode(String content) {
 
 
+        content = content.replaceAll("</?[^/?(br)|(p)][^><]*>", "");//保留br标签和p标签
         content = content.replaceAll("<p>", "");
         content = content.replaceAll("</p >", "\n");
         content = content.replaceAll("<br>", "\n");//保留br标签和p标签
